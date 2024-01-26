@@ -1,13 +1,13 @@
 # QandA-Bingo
 Multiplayer buzzword bingo.
 
-# Stack
+## Stack
 
-## Client
+### Client
 - React
 
-## Server
+### Server
 - FastAPI
 
-## WebSockets
+### WebSockets
 - SocketIO
