@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
 import { Message } from './Message';
+import { Board } from './Board'
 
 // Create socket
 const socket = io(process.env.REACT_APP_API_URL, {
@@ -13,6 +14,8 @@ export const Chat = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
+
+  const [boardData, setBoardData] = useState([]);
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -30,11 +33,24 @@ export const Chat = () => {
     socket.on('chat', (data) => {
       setMessages((prevMessages) => [...prevMessages, {...data, type: 'chat'}]);
     })
+
+    socket.on('board_init', (data) => {
+      setBoardData((board_data) => [...board_data, {...data, type: 'board_init'}]);
+    })
+
   }, []); 
 
   return (
   <>
       <h2>status: { isConnected ? 'connected' : 'disconnected'}</h2>
+
+      <div>
+        <h2>Board</h2>
+        <Board boardData={boardData} />
+      </div>
+
+
+
       <div
         style={{
         height: '500px',
